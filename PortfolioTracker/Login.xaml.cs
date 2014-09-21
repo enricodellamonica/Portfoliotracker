@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DataLayer;
-using DomainClasses.StockQuoteService;
+//using DomainClasses.StockQuoteService;
 
 
 namespace PortfolioTracker {
@@ -23,8 +23,8 @@ namespace PortfolioTracker {
         private Query q;
         public Login() {
             InitializeComponent();
-            var client = new StockQuoteSoapClient();
-            var result = client.GetQuote("ibm, msft");
+            //var client = new StockQuoteSoapClient();
+            //var result = client.GetQuote("ibm, msft");
             q = new Query();
             new MockUser("fabio", "scopel");
             }

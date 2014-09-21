@@ -5,15 +5,40 @@
     <Grid>
 
         <Label Content="Portfolio Name" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" Width="99"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="202,47,0,0" TextWrapping="Wrap" Text="Add Portfolio Name" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtPortfolioName" HorizontalAlignment="Left" Height="23" Margin="202,47,0,0" TextWrapping="Wrap" Text="Add Portfolio Name" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="BtnSave" Content="Save" HorizontalAlignment="Left" Margin="77,92,0,0" VerticalAlignment="Top" Width="75" Click="BtnSave_Click"/>
         <Button Content="Cancel" HorizontalAlignment="Left" Margin="202,92,0,0" VerticalAlignment="Top" Width="75"/>
-        <DataGrid Name="Datagrid" AlternatingRowBackground="Aquamarine" AlternationCount="2" AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="34,138,0,0" VerticalAlignment="Top" >
+        <DataGrid Name="DgPortfolio" AlternatingRowBackground="Aquamarine" AlternationCount="2" AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="34,138,0,0" VerticalAlignment="Top" >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Portfolio"></DataGridTextColumn>
-                <DataGridHyperlinkColumn  Header="Edit Portfolio Name"></DataGridHyperlinkColumn>
-                <DataGridHyperlinkColumn Header="Manage Stocks"></DataGridHyperlinkColumn>
-                <DataGridHyperlinkColumn  Header="Delete Portfolio"></DataGridHyperlinkColumn>
+                <DataGridTextColumn Binding="{Binding Id}" Visibility="Hidden"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Portfolio"></DataGridTextColumn>
+                
+                <DataGridTemplateColumn Header="Edit Portfolio Name">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Edit" Click="ButtonEdit_Click" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                
+                <DataGridTemplateColumn Header="Manage Stocks">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Manage Stocks" Click="Stocks_Click" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Delete Portfolio">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Delete Portfolio" Click="Delete_Click" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+
+                </DataGridTemplateColumn>
+                
             </DataGrid.Columns>
         </DataGrid>
 
