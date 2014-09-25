@@ -41,6 +41,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,9 +51,11 @@
   <ItemGroup>
     <Compile Include="Db.cs" />
     <Compile Include="MockUser.cs" />
+    <Compile Include="PortfolioReturn.cs" />
     <Compile Include="PortfolioTrackerConverterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query.cs" />
+    <Compile Include="TotalReturn.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DomainClasses\DomainClasses.csproj">

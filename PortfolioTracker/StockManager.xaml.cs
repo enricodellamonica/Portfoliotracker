@@ -78,7 +78,7 @@ namespace PortfolioTracker {
                 var stock = new Stock() {
                 Symbol = TbSymbol.Text,
                 Quantity =int.Parse(TbQuantity.Text),
-                PurchaseRate = decimal.Parse(TbQuantity.Text),
+                PurchaseRate = decimal.Parse(TbPrice.Text),
                 StockName = LbCompanyName.Content.ToString(),
                 };
                 _db.Stocks.Add(stock);
@@ -98,11 +98,16 @@ namespace PortfolioTracker {
             }
 
         private void Back_Click(object sender, RoutedEventArgs e) {
-            var window2 = Application.Current.Windows
-            .Cast<Window>()
-            .FirstOrDefault(window => window is MainWindow) as MainWindow;
+        var window2 = Application.Current.Windows
+        .Cast<Window>()
+        .FirstOrDefault(window => window is MainWindow) as MainWindow;
+            //var window2 = new MainWindow();
+           
             if(window2 != null)
+             
                 window2.Content = new PortfolioManager();
+            
+             
             }
 
 

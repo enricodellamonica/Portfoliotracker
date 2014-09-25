@@ -23,7 +23,6 @@ namespace DataLayer {
         public DbSet<User> Users { get; set; }
         public DbSet<Stock> Stocks { get; set; } 
         public DbSet<Portfolio> Portfolios { get; set; } 
-        public DbSet<UpdatedQuote> UpdatedQuotes { get; set; } 
         }
 
     //public class MyEntity

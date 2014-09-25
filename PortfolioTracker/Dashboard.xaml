@@ -4,9 +4,22 @@
          Height="300" Width="500">
     <Grid>
         <Label Content="Select Portfolio" HorizontalAlignment="Left" Margin="30,21,0,0" VerticalAlignment="Top"/>
-        <ComboBox HorizontalAlignment="Left" Margin="169,25,0,0" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Submit" HorizontalAlignment="Left" Margin="358,27,0,0" VerticalAlignment="Top" Width="75"/>
-        <DataGrid HorizontalAlignment="Left" Margin="122,154,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cb" HorizontalAlignment="Left" Margin="169,25,0,0" VerticalAlignment="Top" Width="120" Loaded="ComboBox_Loaded"/>
+        <Button x:Name="BtSubmit" Content="Submit" HorizontalAlignment="Left" Margin="358,27,0,0" VerticalAlignment="Top" Width="75" Click="BtSubmit_Click"/>
+        <DataGrid Name="DgDashboard" AlternatingRowBackground="Aquamarine" AlternationCount="2" AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="34,138,0,0" VerticalAlignment="Top" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}" Visibility="Hidden"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Symbol}" Header="Symbol"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Name"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding LastPrice}" Header="Last Price"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Quantity}" Header="Stock Position"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding TotalCost}" Header="Total Cost"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding MarketValue}" Header="Market Value"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Return}" Header="Return"></DataGridTextColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
+
 
     </Grid>
 </UserControl>

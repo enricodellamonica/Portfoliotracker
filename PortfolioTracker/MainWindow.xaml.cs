@@ -7,12 +7,13 @@ namespace PortfolioTracker {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
-            }
+            MyContentControl.Content = new Dashboard();
+        }
 
 
         private void Dashboard_Click(object sender, RoutedEventArgs e)
         {
-            MyContentControl.Content = new Dashboard();
+           MyContentControl.Content = new Dashboard();
             
         }
 
@@ -28,6 +29,7 @@ namespace PortfolioTracker {
 
         }
 
+ 
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
         MyContentControl.Content = new Login();

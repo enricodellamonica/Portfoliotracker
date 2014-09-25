@@ -10,6 +10,7 @@ namespace DomainClasses {
       public User()
       {
           Active = true;
+          Portfolios=new List<Portfolio>();
       }
       [Key]
       public int Id { get; set; }
@@ -18,5 +19,6 @@ namespace DomainClasses {
       public string Password { get; set; }
 
       public bool Active { get; set; }
+      public List<Portfolio> Portfolios { get; set; } 
         }
     }

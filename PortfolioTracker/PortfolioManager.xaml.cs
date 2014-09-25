@@ -63,7 +63,6 @@ namespace PortfolioTracker {
             {
                 var portfolio = _db.Portfolios.Find(id);
                 portfolio.Name = txtPortfolioName.Text;
-                //portfolio.User= MockUser
 
             }
             else
@@ -71,7 +70,7 @@ namespace PortfolioTracker {
                 var portfolio = new Portfolio()
                 {
                     Name = txtPortfolioName.Text,
-                    //User = 
+                   
                 };
                 _db.Portfolios.Add(portfolio);
                 

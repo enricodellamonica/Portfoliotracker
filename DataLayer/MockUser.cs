@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 using DomainClasses;
 
 namespace DataLayer {
@@ -14,8 +18,27 @@ namespace DataLayer {
                 var user = new User();
                 user.Name = name;
                 user.Password = pass;
-                db.Users.Add(user);
+                int id;
+                // db.Users.Add(user);
+
+                var user2 = db.Users.FirstOrDefault(e => e.Name == name);
+                if (user2==null)
+                {
+                    db.Users.Add(user);
+                    
+                    
+                }
+                else
+                {
+                    user2.Name = name;
+                }
                 db.SaveChanges();
+
+                
+                
+                
+
+
                 }
             }
         }
