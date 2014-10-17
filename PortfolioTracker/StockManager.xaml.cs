@@ -28,6 +28,10 @@ namespace PortfolioTracker {
         private readonly PortfolioTrackerConverterModel _db;
         private int _id;
         private Portfolio _portfolio;
+        private StockQuote.StockQuotes _stockQuotes;
+        private StockTimeSerie _stockTimeSerie;
+        private Stock _stock;
+
         public ObservableCollection<Stock> StockCollection {
             get;
             set;
@@ -65,31 +69,41 @@ namespace PortfolioTracker {
 
             //if id is supplied it means its an Update
             if(id > 0) {               
-                var stock = _db.Stocks.Find(id);
-                stock.Symbol = TbSymbol.Text;
-                stock.Quantity =int.Parse(TbQuantity.Text);
-                stock.PurchaseRate = decimal.Parse(TbPrice.Text);
-                stock.StockName = LbCompanyName.Content.ToString();
+                _stock = _db.Stocks.Find(id);
+                _stock.Symbol = TbSymbol.Text;
+                _stock.Quantity =int.Parse(TbQuantity.Text);
+                _stock.PurchaseRate = decimal.Parse(TbPrice.Text);
+               _stock.StockName = LbCompanyName.Content.ToString();
+
 
             }
             else
             {
                 
-                var stock = new Stock() {
+                _stock = new Stock() {
                 Symbol = TbSymbol.Text,
                 Quantity =int.Parse(TbQuantity.Text),
                 PurchaseRate = decimal.Parse(TbPrice.Text),
                 StockName = LbCompanyName.Content.ToString(),
+                
                 };
-                _db.Stocks.Add(stock);
+
+                
+               
+
+                _stock.StockTimeSeries.Add(_stockTimeSerie);
+                
+                _db.Stocks.Add(_stock);
+                
                
                 //only instantiate one property because it is null
 
      
-                _portfolio.Stocks.Add(stock);
-              
-      
-                }
+                _portfolio.Stocks.Add(_stock);
+           
+                
+
+            }
 
             _db.SaveChanges();
             _id = 0;
@@ -97,18 +111,6 @@ namespace PortfolioTracker {
 
             }
 
-        private void Back_Click(object sender, RoutedEventArgs e) {
-        var window2 = Application.Current.Windows
-        .Cast<Window>()
-        .FirstOrDefault(window => window is MainWindow) as MainWindow;
-            //var window2 = new MainWindow();
-           
-            if(window2 != null)
-             
-                window2.Content = new PortfolioManager();
-            
-             
-            }
 
 
         private void ButtonEdit_Click(object sender, RoutedEventArgs e)
@@ -148,24 +150,29 @@ namespace PortfolioTracker {
             // instantiate serializer
             var serializer = new XmlSerializer(typeof(StockQuote.StockQuotes));
 
-            StockQuote.StockQuotes stockQuotes;
 
             // Read results to a reader
             using(var reader = new StringReader(result)) {
                 // We are doing DESERIALIZING opertion of XML Serializer.
                 // As we are receiving serialized response from service we have to desirialize it to populate Model
-                stockQuotes = (StockQuote.StockQuotes)serializer.Deserialize(reader);
+                _stockQuotes = (StockQuote.StockQuotes)serializer.Deserialize(reader);
 
                 }
 
             // check for null to avoid exception
-            if(stockQuotes != null) {
+            if(_stockQuotes != null) {
                 //stockQuotes contains array of StockQuotesStock class in Stock property
                 //so we loop through each
-                foreach(var stockquote in stockQuotes.Stock) {
+                foreach(var stockquote in _stockQuotes.Stock) {
                     LbCompanyName.Content = stockquote.Name;
-                    }
+                    _stockTimeSerie = new StockTimeSerie()
+                    {
+                        Day = DateTime.Parse(stockquote.Date),
+                        Price = stockquote.PE
+                    };
 
+                }
+                    
                 }
         }
 

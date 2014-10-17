@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DomainClasses {
    public class Stock {
+       public Stock() {
+           StockTimeSeries=new List<StockTimeSerie>();
+           }
 
        [Key]
        public int Id { get; set; }
@@ -16,6 +19,12 @@ namespace DomainClasses {
        public decimal PurchaseRate { get; set; }
 
        public virtual Portfolio Portfolio { get; set; }
+
+       public List<StockTimeSerie> StockTimeSeries {
+           get;
+           set;
+           } 
+
 
         }
     }

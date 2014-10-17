@@ -50,7 +50,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Stock.cs" />
-    <Compile Include="StockHistory.cs" />
+    <Compile Include="StockTimeSeries.cs" />
     <Compile Include="StockQuote.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>

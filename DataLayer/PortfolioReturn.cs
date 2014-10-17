@@ -53,35 +53,6 @@ namespace DataLayer {
                get;
                set;
                }
-
-
-           public void LastPriceSetter() {
-
-               var client = new StockQuoteSoapClient();
-               var result = client.GetQuote(Symbol);
-               // instantiate serializer
-               var serializer = new XmlSerializer(typeof(StockQuote.StockQuotes));
-
-               StockQuote.StockQuotes stockQuotes;
-
-               // Read results to a reader
-               using(var reader = new StringReader(result)) {
-                   // We are doing DESERIALIZING opertion of XML Serializer.
-                   // As we are receiving serialized response from service we have to desirialize it to populate Model
-                   stockQuotes = (StockQuote.StockQuotes)serializer.Deserialize(reader);
-
-                   }
-
-               // check for null to avoid exception
-               if(stockQuotes != null) {
-                   //stockQuotes contains array of StockQuotesStock class in Stock property
-                   //so we loop through each
-                   foreach(var stockquote in stockQuotes.Stock) {
-                       LastPrice = stockquote.Last;
-                       }
-
-                   }
-               }
            public void TotalCostSetter(decimal purchasePrice) {
 
                var res = Quantity * purchasePrice;
@@ -104,35 +75,68 @@ namespace DataLayer {
        public PortfolioReturn(string portfolio)
        {
            _db = Db.ConnectionString;
-           var query1 = from c in _db.Stocks where c.Portfolio.Name == portfolio
+           var query1 = from c in _db.Stocks 
+                        where c.Portfolio.Name == portfolio
                            select c; 
 
-          
-           
-           _purchasePrice = (from p in _db.Stocks where p.Portfolio.Name == portfolio
-                        select p.PurchaseRate).FirstOrDefault();
 
            var listing = query1.ToList();
             _stockList= new List<PortfolioReturnFields>();
 
-           var symbolCSV = "";
+           var symbolCsv = "";
            foreach (var p in listing)
            {
-                symbolCSV = p.Symbol+",";
-               //_prf=new PortfolioReturnFields();
-
-               //_prf.Id = p.Id;
-               //_prf.Symbol = p.Symbol;
-               //_prf.Name = p.StockName;
-               //_prf.LastPriceSetter();
-               //_prf.Quantity = p.Quantity;
-               //_prf.TotalCostSetter(_purchasePrice);
-               //_prf.MarketValueSetter();
-               //_prf.ReturnSetter();
-               //_stockList.Add(_prf);
+                symbolCsv += p.Symbol+", ";
                
                
            }
+
+           // Substring to remove extra comma from symbolcsv to make usable for service.
+           //eg. symbolCSV = "ibm, msft, ify, "
+           // afetr substring  = "ibm, msft, ify"  
+           if(symbolCsv.Length > 2)
+               symbolCsv = symbolCsv.Substring(0, symbolCsv.Length - 2);
+
+           var client = new StockQuoteSoapClient();
+           var result = client.GetQuote(symbolCsv);
+           // instantiate serializer
+           var serializer = new XmlSerializer(typeof(StockQuote.StockQuotes));
+
+           StockQuote.StockQuotes stockQuotes;
+
+           // Read results to a reader
+           using(var reader = new StringReader(result)) {
+               // We are doing DESERIALIZING opertion of XML Serializer.
+               // As we are receiving serialized response from service we have to desirialize it to populate Model
+               stockQuotes = (StockQuote.StockQuotes)serializer.Deserialize(reader);
+
+               }
+
+           // check for null to avoid exception
+           if(stockQuotes != null) {
+               //stockQuotes contains array of StockQuotesStock class in Stock property
+               //so we loop through each
+               foreach(var stockquote in stockQuotes.Stock) {
+                   // get stock from stocklist mathcing to Symbol present in StockQuote
+                   // InvariantCultureIgnoreCase - to ignore upper/lower case and culture specific strings
+                   var stock = listing.FirstOrDefault(s => s.Symbol.Equals(stockquote.Symbol, StringComparison.InvariantCultureIgnoreCase));
+                   if(stock != null) {
+                       _prf = new PortfolioReturnFields();
+
+                       _prf.Id = stock.Id;
+                       _prf.Symbol = stock.Symbol;
+                       _prf.Name = stock.StockName;
+                       _prf.LastPrice = stockquote.Last;
+                       _prf.Quantity = stock.Quantity;
+                       _prf.TotalCostSetter(stock.PurchaseRate);
+                       _prf.MarketValueSetter();
+                       _prf.ReturnSetter();
+                       _stockList.Add(_prf);
+
+                       }
+                   }
+               }
+
 
 
        }

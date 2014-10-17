@@ -19,10 +19,11 @@ namespace DataLayer {
                 user.Name = name;
                 user.Password = pass;
                 int id;
-                // db.Users.Add(user);
+                db.Users.Add(user);
 
-                var user2 = db.Users.FirstOrDefault(e => e.Name == name);
-                if (user2==null)
+               /*
+                var userInDb = db.Users.FirstOrDefault(e => e.Name == name);
+                if (userInDb==null)
                 {
                     db.Users.Add(user);
                     
@@ -30,8 +31,10 @@ namespace DataLayer {
                 }
                 else
                 {
-                    user2.Name = name;
+                   
+                    userInDb.Name = name;
                 }
+                */
                 db.SaveChanges();
 
                 

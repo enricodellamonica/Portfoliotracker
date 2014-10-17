@@ -98,7 +98,7 @@ namespace PortfolioTracker {
             .FirstOrDefault(window => window is MainWindow) as MainWindow;
             var item = (Portfolio)DgPortfolio.SelectedItem;
            
-            if (window2 != null) window2.Content = new StockManager( item.Id );
+            if (window2 != null) window2.MyContentControl.Content = new StockManager( item.Id );
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)
