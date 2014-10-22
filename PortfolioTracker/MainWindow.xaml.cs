@@ -36,5 +36,10 @@ namespace PortfolioTracker {
 
 
         }
+
+        private void History_Click(object sender, RoutedEventArgs e)
+        {
+            MyContentControl.Content = new StockHistory();
+            }
     }
     }

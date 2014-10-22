@@ -68,12 +68,17 @@ namespace PortfolioTracker {
         private void SaveStock(int id) {
 
             //if id is supplied it means its an Update
-            if(id > 0) {               
-                _stock = _db.Stocks.Find(id);
-                _stock.Symbol = TbSymbol.Text;
+            var sobj = _db.Stocks.FirstOrDefault(b => b.Symbol == TbSymbol.Text);
+           
+            if(sobj!= null) {
+                
+                _stock = _db.Stocks.Find(sobj.Id);
+              
                 _stock.Quantity =int.Parse(TbQuantity.Text);
                 _stock.PurchaseRate = decimal.Parse(TbPrice.Text);
-               _stock.StockName = LbCompanyName.Content.ToString();
+            
+               
+
 
 
             }
@@ -87,23 +92,18 @@ namespace PortfolioTracker {
                 StockName = LbCompanyName.Content.ToString(),
                 
                 };
-
-                
-               
-
-                _stock.StockTimeSeries.Add(_stockTimeSerie);
-                
-                _db.Stocks.Add(_stock);
                 
                
                 //only instantiate one property because it is null
 
-     
+                _db.Stocks.Add(_stock);
                 _portfolio.Stocks.Add(_stock);
            
                 
 
             }
+
+            _stock.StockTimeSeries.Add(_stockTimeSerie);
 
             _db.SaveChanges();
             _id = 0;

@@ -24,7 +24,6 @@ namespace DataLayer {
         public DbSet<Stock> Stocks { get; set; } 
         public DbSet<Portfolio> Portfolios { get; set; } 
         public DbSet<StockTimeSerie> StockTimeSeries { get; set; } 
-        public DbSet<StockQuote> StockQuotes { get; set; } 
 
         }
 

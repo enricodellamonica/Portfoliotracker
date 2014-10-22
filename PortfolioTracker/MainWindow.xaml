@@ -10,7 +10,7 @@
         <Menu Grid.Row="0" IsMainMenu="True" Height="27" HorizontalAlignment="Left" Name="Menu1" VerticalAlignment="Top" Width="503" Margin="0,0,-11,0" >
             <MenuItem Header="_Dashboard " Click="Dashboard_Click" />
             <MenuItem Header="_Portfolio Manager " Click="Portfolio_Click" />
-            <MenuItem Header="_History "  />
+            <MenuItem Header="_History " Click="History_Click" />
             <MenuItem Header="_Reports " Click="Reports_Click"/>
             <MenuItem Header="_Logout"  Click="Logout_Click" />
         </Menu>
